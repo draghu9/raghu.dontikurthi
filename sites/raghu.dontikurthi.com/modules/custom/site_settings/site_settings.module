@@ -1,0 +1,40 @@
+<?php
+/**
+ * @file
+ * A block module that displays recent blog and forum posts.
+ */
+
+/**
+ * Implements hook_help.
+ *
+ * Displays help and module information.
+ *
+ * @param path 
+ *   Which path of the site we're using to display help
+ * @param arg 
+ *   Array that holds the current path as returned from arg() function
+ */
+ function site_settings_help($path, $arg){
+ 	switch ($path) {
+ 		case "admin/help#site_settings":
+ 		return '<p>' . t("This module updates the site settings via code") . '</p>';
+ 		break;
+ 	}
+ }
+
+/**
+ * Implements hook_block_list_alter.
+ *
+ * Updates the block settings. Mainly visibility
+ *
+ * @param blocks 
+ *   List of all available blocks on object notation stuffed into an asso array. Its key is block Id
+ */
+ function site_settings_block_list_alter(&$blocks) { 	
+ 	foreach($blocks as $index => $block){
+ 		if($block->module == 'user' && $block->delta == 'login'){
+ 			unset($blocks[$index]);
+ 		}
+ 	}
+ }
+
